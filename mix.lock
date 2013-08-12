@@ -1,0 +1,2 @@
+[ "amqp_client": {:git, "git://github.com/jbrisbin/amqp_client.git", "2b8c2c5a3b647fc4b4733978046305acde611a43", []},
+  "rabbit_common": {:git, "git://github.com/jbrisbin/rabbit_common.git", "99f27775da2e1763c723e41f8b9ca0a68b24ed19", [{:tag, "rabbitmq-3.0.2"}]} ]

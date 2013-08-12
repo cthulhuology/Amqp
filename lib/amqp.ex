@@ -1,0 +1,2 @@
+defmodule Amqp do
+end
