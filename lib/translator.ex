@@ -1,0 +1,3 @@
+defmodule Translator do
+
+end

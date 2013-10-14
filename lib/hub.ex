@@ -1,3 +1,0 @@
-defmodule Hub do
-
-end

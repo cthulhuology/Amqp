@@ -1,3 +1,0 @@
-defmodule Wire do
-
-end
