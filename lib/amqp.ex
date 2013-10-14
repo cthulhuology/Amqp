@@ -18,16 +18,16 @@ defmodule Amqp do
 	defrecord :"basic.ack", Record.extract( :"basic.ack", from: "deps/rabbit_common/include/rabbit_framing.hrl" )
 
 	# Connect to an AMQP server via URL
-	defrecord Server, url: 'amqp://guest:guest@localhost:5672/', connection: nil, channel: nil, ctag: "" do
+	defrecord Server, uri: nil, connection: nil, channel: nil, ctag: "" do
 		
 		# connect to the server in question
-		def connect(server) do
-			{ :ok, params } = :amqp_uri.parse server.url
+		def connect(uri, server) do
+			server = server.uri(Amqp.Uri.new.parse(uri))
+			{ :ok, params } = :amqp_uri.parse(:binary.bin_to_list(server.uri.connstr))
 			{ :ok, connection } = :amqp_connection.start params
 			server = server.connection(connection)
 			{ :ok, channel } = :amqp_connection.open_channel connection
-			server = server.channel(channel)
-			server
+			server.channel(channel)
 		end
 	
 		# Send a message to an exchange, exchange, key, and message are binaries ""
@@ -66,6 +66,14 @@ defmodule Amqp do
 					IO.puts "Unknown message #{any}"
 					server.wait(callback)
 			end		
+		end
+	end
+	defrecord Uri, connstr: "amqp://guest:guest@localhost:5672/", user: "guest", password: "guest", host: "localhost", port: 5672, 
+			vhost: "/", exchange: "test-in", key: "#", queue: "test-in", destination: "test-out", route: "test" do
+		def parse(uri, self) when is_list(uri) do self.parse( :binary.list_to_bin ) end
+		def parse(uri, self) when is_binary(uri) do
+			[ connstr, user, password, host, port, vhost, exchange, key, queue, destination, route ] = :lists.nthtail 1, Regex.run(%r{(amqp://([^:]+):([^@]+)@([^:]+):(\d+)/([^/]*))/([^/]+)/([^/]+)/*([^/]*)/*([^/]*)/*([^/]*)/*}, URI.decode(uri))
+			self.connstr(connstr).user(user).password(password).host(host).port(port).vhost(vhost).exchange(exchange).key(key).queue(queue).destination(destination).route(route)	
 		end
 	end
 end
