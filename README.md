@@ -8,7 +8,7 @@ Getting Started
 If you're impatient, I highly recommend using the convience records:
 
 	c = Amqp.Consumer.new.start "amqp://guest:guest@localhost:5672/myVhost/myExchange/%23/myQueue", fn( msg, props ) -> 
-		IO.puts "#{a}" 
+		IO.puts "#{msg}" 
 	end
 
 And to send the messages to the exchange:
