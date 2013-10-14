@@ -1,4 +1,4 @@
-defrecord Producer, amqp: nil do
+defrecord Amqp.Producer, amqp: nil do
 	def start(uri,self) do
 		self.amqp(Amqp.Server.new.connect(uri))
 	end

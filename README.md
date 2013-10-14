@@ -5,10 +5,20 @@ This module for Elixir makes working with AMQP and RabbitMQ a little easier.
 Getting Started
 ===============
 
+If you're impatient, I highly recommend using the convience records:
+
+	c = Amqp.Consumer.new.start "amqp://guest:guest@localhost:5672/myVhost/myExchange/%23/myQueue", fn( msg, props ) -> 
+		IO.puts "#{a}" 
+	end
+
+And to send the messages to the exchange:
+
+	p = Amqp.Producer.new.start "amqp://guest:guest@localhost:5672/myVhost/myexchange/mykey"
+	p.send "hello world"
+
 Connecting with this module is fairly simple:
 
-	server = Amqp.Server url: 'amqp://guest:guest@localhost:5672/test'
-	server = server.connect
+	server = Amqp.Server.new.connect "amqp://guest:guest@localhost:5672/test"
 
 At this point the server will have a connection and an open channel.
 
@@ -38,8 +48,6 @@ TODO
 
 I'm going to add a number of common behaviors to the list of submodules:
 
-* Producer - just sends messages
-* Consumer - just receives messages
 * Pipe - receives a message on one exchange and sends to another
 * Filter - receives messages on one exchange and selectively sends to another
 * Translator - receives a message in one format and sends to another exchange in another format 
