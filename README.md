@@ -72,7 +72,6 @@ TODO
 
 I'm going to add a number of common behaviors to the list of submodules:
 
-* Pipe - receives a message on one exchange and sends to another
 * Filter - receives messages on one exchange and selectively sends to another
 * Translator - receives a message in one format and sends to another exchange in another format 
 * and many more...
