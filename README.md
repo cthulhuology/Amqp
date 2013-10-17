@@ -43,6 +43,30 @@ what I've found to be best practice in large scale deployments:
 * All exchanges and queues are marked auto_delete: true (because you should clean up after yourself)
 * Each process only listens to a single exchange at a time (because it is easy to run more processes)
 
+Advanced Idioms
+---------------
+
+There is more to life than sending and receiving messages, there's resending messages!  The simplest form
+of resender is a pipe.  Like in plumbing, a pipe takes a stream of messages in from one end and outputs it
+in another location out the other end.  Pipes need not be dumb conduits, but rather may apply an arbitrary
+transform to their contents.  For example, let's say we want to generate a stream of messages that is the
+lowercase normalized form of another stream.  We can use a pipe with a downcase function to normalize our
+text data
+
+	Pipe.new.start "amqp://guest:guest@localhost:5672/test/input-stream/#/lowercase-pipe/lowercase-out/pipe", 
+		fn (msg,props) -> String.downcase msg end
+
+This will take each message from the input-stream exchange and output a lower case version to the pipe-out 
+exchange with one for one throughput.  You could also create a version of the same feed with the first letter
+capitalized:
+
+	Pipe.new.start "amqp://guest:guest@localhost:5672/test/lowercase-out/#/capitalize-pipe/capitalize-out/pipe", 
+		fn (msg,props) -> String.capitalize msg end
+
+Using these sorts of transforms can spread out a lot of processing across many geographically distributed nodes.
+
+
+
 TODO
 ====
 
