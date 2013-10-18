@@ -21,9 +21,12 @@ defmodule Amqp do
 	defrecord Server, uri: nil, connection: nil, channel: nil, ctag: "" do
 		
 		# connect to the server in question
-		def connect(uri, server) do
+		def connect(uri, server) when is_list(uri) do
+			server.connect(String.from_char_list!(uri))
+		end
+		def connect(uri, server) when is_binary(uri) do
 			server = server.uri(Amqp.Uri.new.parse(uri))
-			{ :ok, params } = :amqp_uri.parse(:binary.bin_to_list(server.uri.connstr))
+			{ :ok, params } = :amqp_uri.parse(String.to_char_list!(server.uri.connstr))
 			{ :ok, connection } = :amqp_connection.start params
 			server = server.connection(connection)
 			{ :ok, channel } = :amqp_connection.open_channel connection
