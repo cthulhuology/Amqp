@@ -1,21 +1,21 @@
 defmodule Amqp do
 
 	# Define record types for sending messages etc
-	defrecord :amqp_params_network, Record.extract( :amqp_params_network, from: "./deps/amqp_client/include/amqp_client.hrl")
-	defrecord :"basic.publish", Record.extract( :"basic.publish", from: "./deps/rabbit_common/include/rabbit_framing.hrl") 
-	defrecord :"P_basic", Record.extract( :"P_basic", from: "./deps/rabbit_common/include/rabbit_framing.hrl")
+	defrecord :amqp_params_network, Record.extract( :amqp_params_network, from_lib: "amqp_client/include/amqp_client.hrl")
+	defrecord :"basic.publish", Record.extract( :"basic.publish", from_lib: "rabbit_common/include/rabbit_framing.hrl") 
+	defrecord :"P_basic", Record.extract( :"P_basic", from_lib: "rabbit_common/include/rabbit_framing.hrl")
 	defrecord :amqp_msg, props: :"P_basic".new, payload: ""
-	defrecord :"exchange.declare", Record.extract( :"exchange.declare", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"exchange.declare_ok", Record.extract( :"exchange.declare_ok", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"queue.declare", Record.extract( :"queue.declare", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"queue.bind", Record.extract( :"queue.bind", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"queue.unbind", Record.extract( :"queue.unbind", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"basic.get", Record.extract( :"basic.get", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"basic.get_ok", Record.extract( :"basic.get_ok", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"basic.get_empty", Record.extract( :"basic.get_empty", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"basic.consume", Record.extract( :"basic.consume", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"basic.consume_ok", Record.extract( :"basic.consume_ok", from: "deps/rabbit_common/include/rabbit_framing.hrl")
-	defrecord :"basic.ack", Record.extract( :"basic.ack", from: "deps/rabbit_common/include/rabbit_framing.hrl" )
+	defrecord :"exchange.declare", Record.extract( :"exchange.declare", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"exchange.declare_ok", Record.extract( :"exchange.declare_ok", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"queue.declare", Record.extract( :"queue.declare", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"queue.bind", Record.extract( :"queue.bind", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"queue.unbind", Record.extract( :"queue.unbind", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"basic.get", Record.extract( :"basic.get", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"basic.get_ok", Record.extract( :"basic.get_ok", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"basic.get_empty", Record.extract( :"basic.get_empty", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"basic.consume", Record.extract( :"basic.consume", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"basic.consume_ok", Record.extract( :"basic.consume_ok", from_lib: "rabbit_common/include/rabbit_framing.hrl")
+	defrecord :"basic.ack", Record.extract( :"basic.ack", from_lib: "rabbit_common/include/rabbit_framing.hrl" )
 
 	# Connect to an AMQP server via URL
 	defrecord Server, uri: nil, connection: nil, channel: nil, ctag: "" do
