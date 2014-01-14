@@ -4,7 +4,7 @@ defmodule Amqp.Mixfile do
   def project do
     [ app: :amqp,
       version: "0.0.1",
-      elixir: "~> 0.11.3-dev",
+      elixir: "~> 0.12.1",
       deps: deps ]
   end
 
